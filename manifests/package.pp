@@ -26,16 +26,21 @@ define package::package (
   $tag               = undef,
 ) {
 
+  if versioncmp($::puppetversion,'3.6.1') >= 0 {
+    Package {
+      allow_virtual => $allow_virtual_packages,
+      package_settings  => $package_settings,
+    }
+  }
+
   if ! defined(Package[$title]) {
     package { $title:
       ensure            => $ensure,
       adminfile         => $adminfile,
-      allow_virtual     => $allow_virtual,
       allowcdrom        => $allowcdrom,
       configfiles       => $configfiles,
       flavor            => $flavor,
       install_options   => $install_options,
-      package_settings  => $package_settings,
       provider          => $provider,
       responsefile      => $responsefile,
       source            => $source,
